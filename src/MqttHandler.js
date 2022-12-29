@@ -1,5 +1,3 @@
-const clinicService = require('./services/clinic')
-
 class MqttHandler{
     constructor() {
         const mqtt = require('mqtt');
