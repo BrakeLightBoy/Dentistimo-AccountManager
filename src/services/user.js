@@ -40,7 +40,6 @@ const login = async (personal_number,password) => {
     }
 }
 
-
 // Modify a user's password and email
 const modifyUserInfo = async (id, newUser) => {
     if(id && newUser){
@@ -73,20 +72,8 @@ const modifyUserInfo = async (id, newUser) => {
     }
 }
 
-
-const getUserByPnum = async (pNum) => {
-    if(pNum){
-        const user = await User.findOne({personal_number:pNum}).lean()
-        return user
-    } else {
-        return Promise.reject('Personal number needst to be provided')
-    }
-}
-
-
 module.exports = {
     createUser,
     login,
-    modifyUserInfo,
-    getUserByPnum
+    modifyUserInfo
 }
