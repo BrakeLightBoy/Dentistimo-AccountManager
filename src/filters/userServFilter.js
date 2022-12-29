@@ -25,9 +25,6 @@ const transform = (payload) => {
                         client.publish(`${payload.resTopic}/register`,'{"success":false, "operation":"register", "reason":"to be added"}',{qos:2})
                     })
                     break;
-                case 'delete':
-
-                    break;
                 case 'modify':
                     const newUser = {
                         password: payload.password,
