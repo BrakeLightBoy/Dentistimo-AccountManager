@@ -1,7 +1,7 @@
 const Dentist = require('../models/dentist')
 const mongoose = require('mongoose')
 
-const createDentist = async function (firstName, lastName, userName, password, emailAddress, personalNumber, works_at){
+const createDentist = async function (firstName, lastName, userName, password, works_at){
     if (!(firstName && lastName && userName && password && works_at)){
         return Promise.reject('All user details must be filled in')
     }
