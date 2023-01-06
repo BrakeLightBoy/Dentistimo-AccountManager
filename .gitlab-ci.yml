@@ -1,4 +1,3 @@
-
 image: node:14-alpine
 
 stages:
@@ -17,5 +16,8 @@ test:
   services:
     - name: mvertes/alpine-mongo:latest
       alias: mongo
+  variables:
+    MONGODB_URI: "mongodb://localhost:27017/serverTestDB"
   script:
+    - npm install
     - npm test
