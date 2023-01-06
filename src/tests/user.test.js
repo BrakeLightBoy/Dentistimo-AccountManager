@@ -14,12 +14,12 @@ afterEach(async () => await db.clearDatabase());
 afterAll(async () =>  await db.closeDatabase());
 
 describe('userTests', () => {
-    it('createUser', (done) => {
+
+    it('should successfully create a new user', (done) => {
    //try {
-        console.log('test')
+        
         userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
         .then((user) =>{
-        console.log(user)
         expect(user.first_name).toEqual('Sam')
         expect(user.last_name).toEqual('Jobara')
         expect(user.password).toEqual('jultomte')
@@ -34,14 +34,35 @@ describe('userTests', () => {
             
         })
      })
-     /*it('userLogin', (done) => {
+    it('should successfully login an existing dentist', (done)  => {
         userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
-        .then(user => {
-        expect(userService.login(user.personal_number, user.password)).toEqual(true)
+        .then(async (user) => {
+            console.log(user)
+            const login = await userService.login(user.personal_number, user.password)
+            console.log(login)
+        expect(login).toEqual(true) //Login function returns true if user exists and password matches
         done()
         })
-     })*/
+     })
+    it('should fail to login user with wrong password', done => {
+        userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
+        .then(async (user) => {
+            userService.login(user.personal_number, 'invalidpassword').catch(err => {
+                expect(err).toEqual("Wrong personal number or password")
+            })
+        done()
+     })
+    })
+
+   it('should successfully create a new dentist', done => {
+        
+     })
+    it('should successfully login an existing dentist', done => {
+
+     })
+     
 })
+
 
 
 /*
