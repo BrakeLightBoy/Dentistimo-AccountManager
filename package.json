@@ -2,7 +2,6 @@
   "dependencies": {
     "jest": "^29.3.1",
     "jest-jasmine2": "^29.3.1",
-    "mongodb-memory-server": "^8.10.2",
     "mongoose": "^6.7.2",
     "mqtt": "^4.3.7",
     "sinon": "^15.0.1"
