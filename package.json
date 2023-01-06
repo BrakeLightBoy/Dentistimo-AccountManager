@@ -8,8 +8,7 @@
     "sinon": "^15.0.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20",
-    "qunit": "^2.19.3"
+    "nodemon": "^2.0.20"
   },
   "scripts": {
     "test": "jest --testEnvironment=node --runInBand ./src/tests"
