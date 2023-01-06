@@ -53,34 +53,4 @@ describe('userTests', () => {
         done()
      })
     })
-
-   it('should successfully create a new dentist', done => {
-        
-     })
-    it('should successfully login an existing dentist', done => {
-
-     })
-     
 })
-
-
-
-/*
-describe('First Group Of Tests', () => {
-
-    it('First Test', async done => {
-        const result = await numberFunc(10)
-        expect(result.word).toBe("ten")
-        expect(result.number).toBeGreaterThan(10)
-        done()
-
-    })
-    it('Second Test', async done => {
-        const result = await numberFunc()
-        expect(result).toBeNull()
-        done()
-
-    })
-
-})
-*/
