@@ -30,16 +30,16 @@ module.exports.closeDatabase = async () => {
  */
 
 module.exports.clearDatabase = async () => {
-    const collections = mongoose.connection.collections;
- 
+    const collections = mongoose.connection.collections
+ collections.drop
     for (const key in collections) { 
-        //const collection = collections[key];
-        //await collection.deleteMany();
-       try {
-             mongoose.connection.db.dropCollection(key)
+        const collection = collections[key];
+        await collection.deleteMany();
+       /*try {
+             mongoose.connection.db.dropCollection(key).then
         } catch (error) {
             continue
-        }
+        }*/
         
        
        
