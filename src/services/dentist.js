@@ -46,10 +46,8 @@ const modifyDentistInfo = async function (id, newDentist) {
                     password: newDentist.password || oldDentist.password,
                     first_name: newDentist.first_name || oldDentist.first_name,
                     last_name: newDentist.last_name || oldDentist.last_name
-                }
+                }, {new: true}
             )
-
-            await dentist.save();
             return dentist;
 
         } catch(e){

@@ -40,6 +40,17 @@ const login = async (personal_number,password) => {
     }
 }
 
+const getUser = async (personal_number) => {
+    if(personal_number){     
+        const user = await User.findOne({personal_number: personal_number})
+
+        return user;
+
+    } else {
+        return Promise.reject('User personal number cannot be empty')
+    }
+}
+
 // Modify a user's password and email
 const modifyUserInfo = async (id, newUser) => {
     if(id && newUser){
@@ -54,12 +65,9 @@ const modifyUserInfo = async (id, newUser) => {
                 {personal_number: id},
                 {
                     password: newUser.password || oldUser.password,
-                    email_address: newUser.email_address || oldUser.email_address,
-                    first_name: newUser.first_name || oldUser.first_name,
-                    last_name: newUser.last_name || oldUser.last_name
-                }
+                    email_address: newUser.email_address || oldUser.email_address
+                }, {new: true}
             )
-            await user.save(); 
             return user;
 
         } catch(e){
@@ -75,5 +83,6 @@ const modifyUserInfo = async (id, newUser) => {
 module.exports = {
     createUser,
     login,
+    getUser,
     modifyUserInfo
 }
