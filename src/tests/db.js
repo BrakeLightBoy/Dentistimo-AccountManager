@@ -13,6 +13,15 @@ module.exports.connect = async () => {
     mongoose.connect(mongoURI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+      }, error => {
+        if (!error) {
+            console.log(`Connected to MongoDB with URI: ${mongoURI}`);
+        }
+        else{
+            console.error(`Failed to connect to MongoDB with URI: ${mongoURI}`);
+            console.error(error.stack);
+            process.exit(1);
+        }
       });
 }
 
