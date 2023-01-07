@@ -41,9 +41,10 @@ describe('userTests', () => {
         userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
         .then(async (user) => {
             userService.login(user.personal_number, 'invalidpassword').catch(err => {
+                console.log(err)
                 expect(err).toEqual("Wrong personal number or password")
-            })
-        done()
+                done() 
+        })
      })
     })
 
@@ -57,7 +58,7 @@ describe('userTests', () => {
              user.password = 'newpassword'
                 
             userService.modifyUserInfo(user.personal_number, user).then((user) => {  
-            expect(user.first_name).toBe('newFirstName')
+            expect(user.first_name).toEqual('newFirstName')
             expect(user.last_name).toEqual('newLastName')
             expect(user.password).toEqual('newpassword')
             expect(user.email_address).toEqual('newemail@chalmers.se')
@@ -65,5 +66,25 @@ describe('userTests', () => {
             done() 
         })
      })
+    })
+    it('should fail to modify user info because user not found', (done) => {
+
+             userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
+             .then((user) =>{
+             user.first_name = 'newFirstName'
+             user.last_name = 'newLastName'
+             user.email_address = 'newemail@chalmers.se'
+             user.password = 'newpassword'
+             user.personal_number = '1234567890'
+            console.log(user)
+            userService.modifyUserInfo(user.personal_number, user).catch(err => {
+            console.log(err)
+            expect(err.message).toEqual('User does not exist')
+            done()
+        })
+        
+     }) 
+    
+
     })
 })
