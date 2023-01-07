@@ -45,7 +45,7 @@ const transform = (payload) => {
                         client.publish(`${payload.resTopic}/get-user`,JSON.stringify(resPayload),{qos:2})
                     }).catch(e => {
                         console.log(e)
-                        client.publish(`${payload.resTopic}/get-user`,JSON.stringify(res),{qos:2})
+                        client.publish(`${payload.resTopic}/get-user`,'{"success":false, "operation":"get-user"}',{qos:2})
                     })
                     break;
                 default:
