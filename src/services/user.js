@@ -66,9 +66,8 @@ const modifyUserInfo = async (id, newUser) => {
                 {
                     password: newUser.password || oldUser.password,
                     email_address: newUser.email_address || oldUser.email_address
-                }
+                }, {new: true}
             )
-            await user.save(); 
             return user;
 
         } catch(e){
