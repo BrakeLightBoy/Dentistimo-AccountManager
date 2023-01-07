@@ -57,9 +57,8 @@ const modifyUserInfo = async (id, newUser) => {
                     email_address: newUser.email_address || oldUser.email_address,
                     first_name: newUser.first_name || oldUser.first_name,
                     last_name: newUser.last_name || oldUser.last_name
-                }
-            )
-            await user.save(); 
+                },{new: true},
+            ) 
             return user;
 
         } catch(e){
