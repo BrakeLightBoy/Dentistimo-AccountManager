@@ -10,6 +10,7 @@ const dbName = 'dentistDB';
 
 const mongoURI = process.env.MONGODB_URI || `mongodb://${mongoHost}:${mongoPort}/${dbName}`;
 
+//connects do mongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }, error => {
     if (error) {
         console.error(`Failed to connect to MongoDB with URI: ${mongoURI}`);
@@ -18,6 +19,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }, 
     }
 });
 
+//defines on message behaviour
 client.on('message', async (topic, payload,packet)=> {
     reqFilter(topic,payload)    
 })

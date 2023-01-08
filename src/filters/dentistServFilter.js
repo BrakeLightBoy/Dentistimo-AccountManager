@@ -3,7 +3,7 @@ const MqttHandler = require('../MqttHandler')
 const client = new MqttHandler().getClient()
 
 const transform = (payload) => {
-
+    //chooses a service to use based on the operation given
     if(payload.operation){
         switch(payload.operation){
             case 'login':
@@ -34,7 +34,7 @@ const transform = (payload) => {
                 break;
             case 'get-dentist':
                 dentistService.getDentist(payload.username).then(res => {
-                    console.log('resTopic:', payload.resTopic)
+    
                     const resPayload = {data: res, operation: 'get-dentist'}
                     client.publish(`${payload.resTopic}/get-dentist`,JSON.stringify(resPayload),{qos:2})
                 }).catch(e => {
