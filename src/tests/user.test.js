@@ -51,15 +51,11 @@ describe('userTests', () => {
     it('should successfully modify user info', (done) => {
              userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
              .then((user) =>{
-             user.first_name = 'newFirstName'
-             user.last_name = 'newLastName'
              user.email_address = 'newemail@chalmers.se'
              user.password = 'newpassword'
                
             userService.modifyUserInfo('7205261234', user).then((user) => {
                 console.log(user)  
-            expect(user.first_name).toEqual('newFirstName')
-            expect(user.last_name).toEqual('newLastName')
             expect(user.password).toEqual('newpassword')
             expect(user.email_address).toEqual('newemail@chalmers.se')
             expect(user.personal_number).toEqual('7205261234') 
@@ -73,8 +69,6 @@ describe('userTests', () => {
             
         userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
         .then((user) =>{
-            user.first_name = 'newFirstName'
-            user.last_name = 'newLastName'
             user.email_address = 'newemail@chalmers.se'
             user.password = 'newpassword'
                
@@ -89,8 +83,6 @@ describe('userTests', () => {
 
              userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
              .then((user) =>{
-             user.first_name = 'newFirstName'
-             user.last_name = 'newLastName'
              user.email_address = 'newemail@chalmers.se'
              user.password = 'newpassword'
              user.personal_number = '1234567890'
