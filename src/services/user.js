@@ -54,9 +54,10 @@ const modifyUserInfo = async (id, newUser) => {
                 {personal_number: id},
                 {
                     password: newUser.password || oldUser.password,
-                    last_name: newUser.last_name || oldUser.last_name
-                },{new: true},
+                    email_address: newUser.email_address || oldUser.email_address
+                },{new: true}
             )
+            console.log(user)
             return user;
 
         } catch(e){
