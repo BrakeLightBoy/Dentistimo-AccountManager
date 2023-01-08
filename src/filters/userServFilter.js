@@ -38,8 +38,18 @@ const transform = (payload) => {
                         client.publish(`${payload.resTopic}/modify`,`{"success":false, "operation":"modify", "reason":"${e}"}`,{qos:2})
                     })
                     break;
+                case 'get-user':
+                    userService.getUser(payload.personal_number).then(res => {
+                        console.log('resTopic:', payload.resTopic)
+                        const resPayload = {data: res, operation: 'get-user'}
+                        client.publish(`${payload.resTopic}/get-user`,JSON.stringify(resPayload),{qos:2})
+                    }).catch(e => {
+                        console.log(e)
+                        client.publish(`${payload.resTopic}/get-user`,'{"success":false, "operation":"get-user"}',{qos:2})
+                    })
+                    break;
                 default:
-                    console.log('Wrong user operation given')
+                    console.log(payload.operation + ' Wrong user operation given')
             }
         } else {
             console.log('No operation given')
