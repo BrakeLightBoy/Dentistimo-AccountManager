@@ -28,16 +28,14 @@ const transform = (payload) => {
                 case 'modify':
                     const newUser = {
                         password: payload.password,
-                        email_address: payload.email_address,
-                        first_name: payload.first_name,
-                        last_name: payload.last_name
+                        email_address: payload.email_address
                     }
                     userService.modifyUserInfo(payload.id, newUser).then(res => {
                         console.log('resTopic:', payload.resTopic)
                         client.publish(`${payload.resTopic}/modify`,'{"success":true, "operation":"modify"}',{qos:2})
                     }).catch(e => {
                         console.log(e)
-                        client.publish(`${payload.resTopic}/modify`,`{"success":false, "operation":"modify", "reason":"${e}"`,{qos:2})
+                        client.publish(`${payload.resTopic}/modify`,`{"success":false, "operation":"modify", "reason":"${e}"}`,{qos:2})
                     })
                     break;
                 default:

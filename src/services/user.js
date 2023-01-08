@@ -44,19 +44,21 @@ const login = async (personal_number,password) => {
 const modifyUserInfo = async (id, newUser) => {
     if(id && newUser){
         try{
-            const oldUser = await User.findOneAndUpdate(
-                {personal_number: id},
-                {
-                    password: newUser.password || oldUser.password,
-                    email_address: newUser.email_address || oldUser.email_address,
-                    first_name: newUser.first_name || oldUser.first_name,
-                    last_name: newUser.last_name || oldUser.last_name
-                },{new: true},
-            )
+            const oldUser = await User.find({personal_number: id})
+            console.log(oldUser)
             if (!oldUser || oldUser.length < 1) {
                 return Promise.reject({ message: 'User does not exist', code: 404 });
             }
-               return oldUser 
+            console.log('test')
+            const user = await User.findOneAndUpdate(
+                {personal_number: id},
+                {
+                    password: newUser.password || oldUser.password,
+                    last_name: newUser.last_name || oldUser.last_name
+                },{new: true},
+            )
+            return user;
+
         } catch(e){
             //Error code 11000 = mongodb unique key already in use
             //Can only be email in our case, cant change personal number
