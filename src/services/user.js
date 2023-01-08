@@ -55,17 +55,21 @@ const getUser = async (personal_number) => {
 const modifyUserInfo = async (id, newUser) => {
     if(id && newUser){
         try{
-            const oldUser = await User.findOneAndUpdate(
+            const oldUser = await User.find({personal_number: id})
+            console.log(oldUser)
+            if (!oldUser || oldUser.length < 1) {
+                return Promise.reject({ message: 'User does not exist', code: 404 });
+            }
+            console.log('test')
+            const user = await User.findOneAndUpdate(
                 {personal_number: id},
                 {
                     password: newUser.password || oldUser.password,
                     email_address: newUser.email_address || oldUser.email_address
-                },{new: true},
+                },{new: true}
             )
-            if (!oldUser || oldUser.length < 1) {
-                return Promise.reject({ message: 'User does not exist', code: 404 });
-            }
-               return oldUser 
+            console.log(user)
+            return user;
 
         } catch(e){
             //Error code 11000 = mongodb unique key already in use
