@@ -8,10 +8,8 @@ const transform  = function (topic, payload) {
     
     try{
         rTopic = topic.split('/')[1]
-    } catch(e){
-        console.log(e)
-    }
-
+    } catch(e){}
+ 
     try{   
         const jPayload = JSON.parse(payload)
         
@@ -20,11 +18,12 @@ const transform  = function (topic, payload) {
             filterServType(jPayload)
         } else {
             console.log(`Parsing of topic failed, topic: ${topic} has invalid format`)
-            
         }
 
     } catch(e) {
-        console.log(e)
+        if(rTopic){
+            client.publish(`${rTopic}`,`{"success":false, "reason":"${e.message}"}`,{qos:2})
+        }
     }
 }
 
