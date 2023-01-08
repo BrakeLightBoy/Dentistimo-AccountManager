@@ -11,9 +11,7 @@ const transform = (payload) => {
                 filterDentistServ(payload)
                 break;
         }
-    } else {
-        console.log('No operation category given')
-    }
+    } 
 }
 
 module.exports = transform

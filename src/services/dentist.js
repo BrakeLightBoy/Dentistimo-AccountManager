@@ -15,7 +15,6 @@ const createDentist = async function (firstName, lastName, userName, password, e
                 works_at: works_at
             })
         } catch (err) {
-            console.log(err)
             return Promise.reject('Invalid user data')
         }
 }
@@ -51,7 +50,6 @@ const modifyDentistInfo = async function (id, newDentist) {
             return dentist;
 
         } catch(e){
-            console.log(e)
             return Promise.reject('Malformed dentist data');
         }
 
