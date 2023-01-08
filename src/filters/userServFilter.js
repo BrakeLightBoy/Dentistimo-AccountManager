@@ -35,7 +35,7 @@ const transform = (payload) => {
                         client.publish(`${payload.resTopic}/modify`,'{"success":true, "operation":"modify"}',{qos:2})
                     }).catch(e => {
                         console.log(e)
-                        client.publish(`${payload.resTopic}/modify`,'{"success":false, "operation":"modify", "reason":"to be added"}',{qos:2})
+                        client.publish(`${payload.resTopic}/modify`,`{"success":false, "operation":"modify", "reason":"${e}"}`,{qos:2})
                     })
                     break;
                 case 'get-user':

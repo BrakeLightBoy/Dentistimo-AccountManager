@@ -1,7 +1,7 @@
 const Dentist = require('../models/dentist')
 const mongoose = require('mongoose')
 
-const createDentist = async function (firstName, lastName, userName, password, emailAddress, personalNumber, works_at){
+const createDentist = async function (firstName, lastName, userName, password, works_at){
     if (!(firstName && lastName && userName && password && works_at)){
         return Promise.reject('All user details must be filled in')
     }
@@ -46,7 +46,7 @@ const modifyDentistInfo = async function (id, newDentist) {
         try{
             const oldDentist = await Dentist.find({username: id})
             
-            if (!oldDentist) {
+            if (!oldDentist || oldDentist.length < 1) {
                 return Promise.reject({ message: 'Dentist does not exist', code: 404 });
             }
 
@@ -58,10 +58,10 @@ const modifyDentistInfo = async function (id, newDentist) {
                 }, {new: true}
             )
             return dentist;
-
+            
         } catch(e){
-            console.log(e)
-            return Promise.reject('Malformed dentist data');
+            if (e.code == 11000) return Promise.reject('Username is already in use');
+            else return Promise.reject('Malformed dentist data');
         }
 
     } else {
