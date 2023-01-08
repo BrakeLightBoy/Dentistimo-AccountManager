@@ -1,9 +1,7 @@
 const filterServType = require('./serviceTypeFilter')
 
 const transform  = function (topic, payload) {
-    //temporary log messages
-    console.log('topic:',topic)
-    console.log('payload:',payload.toString())
+
     let rTopic = null
     
     try{
@@ -16,9 +14,7 @@ const transform  = function (topic, payload) {
         if(rTopic){
             jPayload.resTopic = rTopic
             filterServType(jPayload)
-        } else {
-            console.log(`Parsing of topic failed, topic: ${topic} has invalid format`)
-        }
+        } 
 
     } catch(e) {
         if(rTopic){

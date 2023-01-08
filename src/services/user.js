@@ -16,7 +16,6 @@ const createUser = async (first_name,last_name,password,email_address,personal_n
             return user;
 
         } catch(e){
-            console.log(e)
             return Promise.reject('Malformed user data');
         }
 

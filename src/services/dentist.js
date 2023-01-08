@@ -15,7 +15,6 @@ const createDentist = async function (firstName, lastName, userName, password, w
                 works_at: works_at
             })
         } catch (err) {
-            console.log(err)
             return Promise.reject('Invalid user data')
         }
 }
