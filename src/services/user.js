@@ -1,6 +1,7 @@
 const User = require('../models/user')
 const mongoose = require('mongoose')
 
+//creates user
 const createUser = async (first_name,last_name,password,email_address,personal_number) => {
     if(first_name && last_name && password && email_address && personal_number){
         try{
@@ -24,6 +25,7 @@ const createUser = async (first_name,last_name,password,email_address,personal_n
     }
 }
 
+//login
 const login = async (personal_number,password) => {
     if(!personal_number || !password){
         return Promise.reject('Personal number and password must be given')
@@ -39,6 +41,7 @@ const login = async (personal_number,password) => {
     }
 }
 
+//gets user by personal number
 const getUser = async (personal_number) => {
     if(personal_number){     
         const user = await User.findOne({personal_number: personal_number})

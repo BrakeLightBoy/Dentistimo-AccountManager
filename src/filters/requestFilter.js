@@ -1,7 +1,7 @@
 const filterServType = require('./serviceTypeFilter')
 
 const transform  = function (topic, payload) {
-
+    //stringifies the payload and attaches the response topic
     let rTopic = null
     
     try{

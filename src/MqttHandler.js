@@ -1,4 +1,5 @@
 class MqttHandler{
+    //singleton mqtt client that subscribes to a common topic where it listens for client requests
     constructor() {
         const mqtt = require('mqtt');
 
