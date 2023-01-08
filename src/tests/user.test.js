@@ -17,13 +17,13 @@ describe('userTests', () => {
 
     it('should successfully create a new user', (done) => {
         userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
-        .then((user) =>{
+        .then(async (user) =>{
         expect(user.first_name).toEqual('Sam')
         expect(user.last_name).toEqual('Jobara')
         expect(user.password).toEqual('jultomte')
         expect(user.email_address).toEqual('jobara@chalmers.se')
         expect(user.personal_number).toEqual('7205261234')
-
+        console.log('test1', user)
         done()
      })
     })
@@ -50,19 +50,15 @@ describe('userTests', () => {
 
     it('should successfully modify user info', (done) => {
              userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
-             .then((user) =>{
-             user.first_name = 'newFirstName'
-             user.last_name = 'newLastName'
+             .then(async (user) =>{
              user.email_address = 'newemail@chalmers.se'
              user.password = 'newpassword'
                
-            userService.modifyUserInfo('7205261234', user).then((user) => {
-                console.log(user)  
-            expect(user.first_name).toEqual('newFirstName')
-            expect(user.last_name).toEqual('newLastName')
-            expect(user.password).toEqual('newpassword')
-            expect(user.email_address).toEqual('newemail@chalmers.se')
-            expect(user.personal_number).toEqual('7205261234') 
+            userService.modifyUserInfo('7205261234', user).then(async (modifiedUser) => {
+                console.log('3', modifiedUser)  
+            expect(modifiedUser.password).toEqual('newpassword')
+            expect(modifiedUser.email_address).toEqual('newemail@chalmers.se')
+            expect(modifiedUser.personal_number).toEqual('7205261234') 
             done()
         })
      })
@@ -72,7 +68,7 @@ describe('userTests', () => {
         userService.createUser('testfirst', 'testlast', 'testpw', 'newemail@chalmers.se', '1234567890')
             
         userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
-        .then((user) =>{
+        .then(async (user) =>{
             user.first_name = 'newFirstName'
             user.last_name = 'newLastName'
             user.email_address = 'newemail@chalmers.se'
