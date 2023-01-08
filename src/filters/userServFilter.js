@@ -36,8 +36,8 @@ const transform = (payload) => {
                         console.log('resTopic:', payload.resTopic)
                         client.publish(`${payload.resTopic}/modify`,'{"success":true, "operation":"modify"}',{qos:2})
                     }).catch(e => {
-                        console.log(e)
-                        client.publish(`${payload.resTopic}/modify`,'{"success":false, "operation":"modify", "reason":"to be added"}',{qos:2})
+                        console.log(e)                                                                                  //ADD REASON TO MODIFY METHOD
+                        client.publish(`${payload.resTopic}/modify`,`{"success":false, "operation":"modify", "reason":"${e.reason}"`,{qos:2})
                     })
                     break;
                 default:

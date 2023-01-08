@@ -42,16 +42,9 @@ const login = async (personal_number,password) => {
 
 // Modify a user's password and email
 const modifyUserInfo = async (id, newUser) => {
-    console.log(id, newUser)
     if(id && newUser){
         try{
-            const oldUser = await User.find({personal_number: id})
-            console.log(oldUser)
-            if (!oldUser || oldUser.length < 1) {
-                return Promise.reject({ message: 'User does not exist', code: 404 });
-            }
-            console.log('test')
-            const user = await User.findOneAndUpdate(
+            const oldUser = await User.findOneAndUpdate(
                 {personal_number: id},
                 {
                     password: newUser.password || oldUser.password,
@@ -60,13 +53,16 @@ const modifyUserInfo = async (id, newUser) => {
                     last_name: newUser.last_name || oldUser.last_name
                 },{new: true},
             )
-            return user;
-
+            if (!oldUser || oldUser.length < 1) {
+                return Promise.reject({ message: 'User does not exist', code: 404 });
+            }
+               return oldUser 
         } catch(e){
-            console.log(e)
-            return Promise.reject('Malformed user data');
+            //Error code 11000 = mongodb unique key already in use
+            //Can only be email in our case, cant change personal number
+            if (e.code == 11000) return Promise.reject('Email address already in use');
+            else return Promise.reject('Malformed user data');
         }
-
     } else {
        return Promise.reject('All user details must be filled')
     }
