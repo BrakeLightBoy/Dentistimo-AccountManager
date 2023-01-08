@@ -29,8 +29,6 @@ const transform = (payload) => {
                 const newDentist = {
                     username: payload.username,
                     password: payload.password,
-                    first_name: payload.first_name,
-                    last_name: payload.last_name
                 }
                 dentistService.modifyDentistInfo(payload.id, newDentist).then(res => {
                     console.log('resTopic:', payload.resTopic)

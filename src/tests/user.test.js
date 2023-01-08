@@ -17,7 +17,7 @@ describe('userTests', () => {
 
     it('should successfully create a new user', (done) => {
         userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
-        .then(async (user) =>{
+        .then((user) =>{
         expect(user.first_name).toEqual('Sam')
         expect(user.last_name).toEqual('Jobara')
         expect(user.password).toEqual('jultomte')
@@ -30,16 +30,18 @@ describe('userTests', () => {
 
     it('should successfully login an existing user', (done)  => {
         userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
-        .then(async (user) => {
-            const login = await userService.login(user.personal_number, user.password)
-        expect(login).toEqual(true) //Login function returns true if user exists and password matches
+        .then((user) => {
+            userService.login(user.personal_number, user.password).then(login => {
+                 expect(login).toEqual(true) //Login function returns true if user exists and password matches
         done()
+            })
+       
         })
      })
 
     it('should fail to login user with wrong password', done => {
         userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
-        .then(async (user) => {
+        .then((user) => {
             userService.login(user.personal_number, 'invalidpassword').catch(err => {
                 console.log(err)
                 expect(err).toEqual("Wrong personal number or password")
@@ -50,11 +52,11 @@ describe('userTests', () => {
 
     it('should successfully modify user info', (done) => {
              userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
-             .then(async (user) =>{
+             .then((user) =>{
              user.email_address = 'newemail@chalmers.se'
              user.password = 'newpassword'
                
-            userService.modifyUserInfo('7205261234', user).then(async (modifiedUser) => {
+            userService.modifyUserInfo('7205261234', user).then((modifiedUser) => {
                 console.log('3', modifiedUser)  
             expect(modifiedUser.password).toEqual('newpassword')
             expect(modifiedUser.email_address).toEqual('newemail@chalmers.se')
@@ -68,7 +70,7 @@ describe('userTests', () => {
         userService.createUser('testfirst', 'testlast', 'testpw', 'newemail@chalmers.se', '1234567890')
             
         userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
-        .then(async (user) =>{
+        .then((user) =>{
             user.email_address = 'newemail@chalmers.se'
             user.password = 'newpassword'
                
