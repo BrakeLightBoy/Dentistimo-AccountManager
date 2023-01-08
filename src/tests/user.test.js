@@ -69,8 +69,6 @@ describe('userTests', () => {
             
         userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
         .then(async (user) =>{
-            user.first_name = 'newFirstName'
-            user.last_name = 'newLastName'
             user.email_address = 'newemail@chalmers.se'
             user.password = 'newpassword'
                
@@ -85,8 +83,6 @@ describe('userTests', () => {
 
              userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
              .then((user) =>{
-             user.first_name = 'newFirstName'
-             user.last_name = 'newLastName'
              user.email_address = 'newemail@chalmers.se'
              user.password = 'newpassword'
              user.personal_number = '1234567890'
