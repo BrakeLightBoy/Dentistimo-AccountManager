@@ -29,6 +29,17 @@ const dentistLogin = async function (username, password) {
     }
 }
 
+const getDentist = async (username) => {
+    if(username){     
+        const dentist = await Dentist.findOne({username: username})
+
+        return dentist;
+
+    } else {
+        return Promise.reject('Dentist id cannot be empty')
+    }
+}
+
 //Modify a dentist's username and password
 const modifyDentistInfo = async function (id, newDentist) {
     if(id && newDentist){
@@ -43,7 +54,7 @@ const modifyDentistInfo = async function (id, newDentist) {
                 {username: id},
                 {
                     username: newDentist.username || oldDentist.username,
-                    password: newDentist.password || oldDentist.password,
+                    password: newDentist.password || oldDentist.password
                 }, {new: true}
             )
             return dentist;
@@ -61,6 +72,7 @@ const modifyDentistInfo = async function (id, newDentist) {
 module.exports = {
     createDentist,
     dentistLogin,
-    modifyDentistInfo,
+    getDentist,
+    modifyDentistInfo
 }
 
