@@ -49,21 +49,39 @@ describe('userTests', () => {
     })
 
     it('should successfully modify user info', (done) => {
-        //try 
              userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
              .then((user) =>{
              user.first_name = 'newFirstName'
              user.last_name = 'newLastName'
              user.email_address = 'newemail@chalmers.se'
              user.password = 'newpassword'
-                
-            userService.modifyUserInfo(user.personal_number, user).then((user) => {  
+               
+            userService.modifyUserInfo('7205261234', user).then((user) => {
+                console.log(user)  
             expect(user.first_name).toEqual('newFirstName')
             expect(user.last_name).toEqual('newLastName')
             expect(user.password).toEqual('newpassword')
             expect(user.email_address).toEqual('newemail@chalmers.se')
             expect(user.personal_number).toEqual('7205261234') 
-            done() 
+            done()
+        })
+     })
+    })
+    it('should fail to modify user info because email is already in use', (done) => {
+ 
+        userService.createUser('testfirst', 'testlast', 'testpw', 'newemail@chalmers.se', '1234567890')
+            
+        userService.createUser('Sam', 'Jobara', 'jultomte', 'jobara@chalmers.se', '7205261234')
+        .then((user) =>{
+            user.first_name = 'newFirstName'
+            user.last_name = 'newLastName'
+            user.email_address = 'newemail@chalmers.se'
+            user.password = 'newpassword'
+               
+            userService.modifyUserInfo('7205261234', user).catch(e => {
+            console.log('test5', e)
+            expect(e).toEqual('Email address already in use')
+            done()
         })
      })
     })
@@ -76,15 +94,12 @@ describe('userTests', () => {
              user.email_address = 'newemail@chalmers.se'
              user.password = 'newpassword'
              user.personal_number = '1234567890'
-            console.log(user)
+            console.log('test6', user)
             userService.modifyUserInfo(user.personal_number, user).catch(err => {
-            console.log(err)
+            console.log('test 6', err)
             expect(err.message).toEqual('User does not exist')
             done()
         })
-        
-     }) 
-    
-
+     })
     })
 })
