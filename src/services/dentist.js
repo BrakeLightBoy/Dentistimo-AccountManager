@@ -1,7 +1,7 @@
 const Dentist = require('../models/dentist')
 const mongoose = require('mongoose')
 
-const createDentist = async function (firstName, lastName, userName, password, emailAddress, personalNumber, works_at){
+const createDentist = async function (firstName, lastName, userName, password, works_at){
     if (!(firstName && lastName && userName && password && works_at)){
         return Promise.reject('All user details must be filled in')
     }
@@ -29,13 +29,24 @@ const dentistLogin = async function (username, password) {
     }
 }
 
+const getDentist = async (username) => {
+    if(username){     
+        const dentist = await Dentist.findOne({username: username})
+
+        return dentist;
+
+    } else {
+        return Promise.reject('Dentist id cannot be empty')
+    }
+}
+
 //Modify a dentist's username and password
 const modifyDentistInfo = async function (id, newDentist) {
     if(id && newDentist){
         try{
             const oldDentist = await Dentist.find({username: id})
             
-            if (!oldDentist) {
+            if (!oldDentist || oldDentist.length < 1) {
                 return Promise.reject({ message: 'Dentist does not exist', code: 404 });
             }
 
@@ -43,16 +54,14 @@ const modifyDentistInfo = async function (id, newDentist) {
                 {username: id},
                 {
                     username: newDentist.username || oldDentist.username,
-                    password: newDentist.password || oldDentist.password,
-                    first_name: newDentist.first_name || oldDentist.first_name,
-                    last_name: newDentist.last_name || oldDentist.last_name
+                    password: newDentist.password || oldDentist.password
                 }, {new: true}
             )
             return dentist;
-
+            
         } catch(e){
-            console.log(e)
-            return Promise.reject('Malformed dentist data');
+            if (e.code == 11000) return Promise.reject('Username is already in use');
+            else return Promise.reject('Malformed dentist data');
         }
 
     } else {
@@ -63,6 +72,7 @@ const modifyDentistInfo = async function (id, newDentist) {
 module.exports = {
     createDentist,
     dentistLogin,
-    modifyDentistInfo,
+    getDentist,
+    modifyDentistInfo
 }
 

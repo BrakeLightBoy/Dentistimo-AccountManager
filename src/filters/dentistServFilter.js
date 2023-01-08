@@ -28,16 +28,24 @@ const transform = (payload) => {
             case 'modify':
                 const newDentist = {
                     username: payload.username,
-                    password: payload.password,
-                    first_name: payload.first_name,
-                    last_name: payload.last_name
+                    password: payload.password
                 }
                 dentistService.modifyDentistInfo(payload.id, newDentist).then(res => {
                     console.log('resTopic:', payload.resTopic)
                     client.publish(`${payload.resTopic}/modify`,'{"success":true, "operation":"modify"}',{qos:2})
                 }).catch(e => {
                     console.log(e)
-                    client.publish(`${payload.resTopic}/modify`,'{"success":false, "operation":"modify", "reason":"to be added"}',{qos:2})
+                    client.publish(`${payload.resTopic}/modify`,`{"success":false, "operation":"modify", "reason":"${e}"}`,{qos:2})
+                })
+                break;
+            case 'get-dentist':
+                dentistService.getDentist(payload.username).then(res => {
+                    console.log('resTopic:', payload.resTopic)
+                    const resPayload = {data: res, operation: 'get-dentist'}
+                    client.publish(`${payload.resTopic}/get-dentist`,JSON.stringify(resPayload),{qos:2})
+                }).catch(e => {
+                    console.log(e)
+                    client.publish(`${payload.resTopic}/get-dentist`,'{"success":false, "operation":"get-dentist"}',{qos:2})
                 })
                 break;
             default:
